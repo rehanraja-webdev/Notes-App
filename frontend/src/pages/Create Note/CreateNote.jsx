@@ -1,24 +1,33 @@
 import "./CreateNote.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import axios from "axios";
 
 const CreateNote = ({ setNotes, notes }) => {
   const titleRef = useRef("");
   const contentRef = useRef("");
   const navigate = useNavigate();
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     const title = titleRef.current.value;
     const content = contentRef.current.value;
+
+    const formData = { title, content };
+
+    const response = await axios.post(
+      "http://localhost:3000/api/notes/create",
+      formData,
+    );
+
+    console.log(response);
 
     const newNote = { _id: Date.now(), title, content };
 
     setNotes([...notes, newNote]);
 
     navigate("/");
-    console.log(title, content);
   };
   return (
     <div className="create-note-page">
