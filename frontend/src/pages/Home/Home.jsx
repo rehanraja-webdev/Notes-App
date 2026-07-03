@@ -2,10 +2,10 @@ import "./Home.css";
 import NoteCard from "../../components/NoteCard";
 import { Link } from "react-router-dom";
 
-const Home = ({ notes }) => {
+const Home = ({ notes, setNotes }) => {
   return (
     <div className="homepage">
-      {notes.length > 0 && (
+      {notes.length !== 0 && (
         <>
           <section className="hero-section">
             <h1>📝 Notes Hub</h1>
@@ -64,9 +64,10 @@ const Home = ({ notes }) => {
             <div className="notes-container">
               {notes.map((note) => (
                 <NoteCard
-                  key={note._id}
-                  title={note.title}
-                  content={note.content}
+                  key={note?._id}
+                  note={note}
+                  notes={notes}
+                  setNotes={setNotes}
                 />
               ))}
             </div>

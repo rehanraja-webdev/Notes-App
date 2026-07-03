@@ -8,9 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const App = () => {
-  const [notes, setNotes] = useState([
-    { _id: 1, title: "test title", content: "test content" },
-  ]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,27 +17,20 @@ const App = () => {
           "http://localhost:3000/api/notes/fetch",
         );
 
-        setNotes(response.data.note);
-
-        console.log(notes);
-        console.log(response.data.note);
+        setNotes(response.data.note || []);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [notes]);
 
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Home notes={notes} />} />
-        <Route
-          path="/create-note"
-          element={<CreateNote setNotes={setNotes} notes={notes} />}
-        />
+        <Route path="/" element={<Home notes={notes} setNotes={setNotes} />} />
+        <Route path="/create-note" element={<CreateNote />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

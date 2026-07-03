@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import axios from "axios";
 
-const CreateNote = ({ setNotes, notes }) => {
+const CreateNote = () => {
   const titleRef = useRef("");
   const contentRef = useRef("");
   const navigate = useNavigate();
@@ -20,13 +20,7 @@ const CreateNote = ({ setNotes, notes }) => {
       "http://localhost:3000/api/notes/create",
       formData,
     );
-
-    console.log(response);
-
-    const newNote = { _id: Date.now(), title, content };
-
-    setNotes([newNote, ...notes]);
-
+    alert(response.data.message);
     navigate("/");
   };
   return (
@@ -45,6 +39,7 @@ const CreateNote = ({ setNotes, notes }) => {
               ref={titleRef}
               placeholder="Enter note title..."
               maxLength={100}
+              required
             />
           </div>
 
@@ -54,6 +49,7 @@ const CreateNote = ({ setNotes, notes }) => {
               ref={contentRef}
               placeholder="Write your note here..."
               rows="3"
+              required
             ></textarea>
           </div>
 
