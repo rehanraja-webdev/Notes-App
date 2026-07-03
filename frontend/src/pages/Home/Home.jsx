@@ -1,30 +1,8 @@
-import { useState } from "react";
 import "./Home.css";
 import NoteCard from "../../components/NoteCard";
 import { Link } from "react-router-dom";
 
-const Home = () => {
-  const [notes] = useState([
-    {
-      _id: 1,
-      title: "MERN Project Ideas",
-      content:
-        "Build a Notes App, Chat Application, Expense Tracker, strengthen your full-stack development skills.",
-    },
-    {
-      _id: 2,
-      title: "Today's Tasks",
-      content:
-        "Complete React Router setup, design NoteCard component, and connect frontend with Express backend.",
-    },
-    {
-      _id: 3,
-      title: "Interview Preparation",
-      content:
-        "Revise JavaScript concepts including closures, promises, async-await, and event loop.",
-    },
-  ]);
-
+const Home = ({ notes }) => {
   return (
     <div className="homepage">
       {notes.length > 0 && (

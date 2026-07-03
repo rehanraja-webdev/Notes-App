@@ -1,7 +1,25 @@
 import "./CreateNote.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
-const CreateNote = () => {
+const CreateNote = ({ setNotes, notes }) => {
+  const titleRef = useRef("");
+  const contentRef = useRef("");
+  const navigate = useNavigate();
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    const title = titleRef.current.value;
+    const content = contentRef.current.value;
+
+    const newNote = { _id: Date.now(), title, content };
+
+    setNotes([...notes, newNote]);
+
+    navigate("/");
+    console.log(title, content);
+  };
   return (
     <div className="create-note-page">
       <div className="create-note-container">
@@ -10,11 +28,12 @@ const CreateNote = () => {
           Capture your thoughts, ideas, and important information.
         </p>
 
-        <form className="note-form">
+        <form onSubmit={handleOnSubmit} className="note-form">
           <div className="form-group">
             <label>Title</label>
             <input
               type="text"
+              ref={titleRef}
               placeholder="Enter note title..."
               maxLength={100}
             />
@@ -22,7 +41,11 @@ const CreateNote = () => {
 
           <div className="form-group">
             <label>Content</label>
-            <textarea placeholder="Write your note here..." rows="3"></textarea>
+            <textarea
+              ref={contentRef}
+              placeholder="Write your note here..."
+              rows="3"
+            ></textarea>
           </div>
 
           <div className="button-group">
