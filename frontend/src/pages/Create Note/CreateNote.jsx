@@ -25,7 +25,7 @@ const CreateNote = ({ setNotes, notes }) => {
 
     const newNote = { _id: Date.now(), title, content };
 
-    setNotes([...notes, newNote]);
+    setNotes([newNote, ...notes]);
 
     navigate("/");
   };

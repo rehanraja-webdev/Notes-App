@@ -7,11 +7,7 @@ router.post("/create", notesController.createNote);
 
 router.get("/fetch", notesController.getAllNotes);
 
-router.post("/delete/:id", (req, res) => {
-  res.json({ message: "notes deleted successfully" });
-});
-router.post("/update/:id", (req, res) => {
-  res.json({ message: "notes updated successfully" });
-});
+router.delete("/delete/:id", notesController.deleteNote);
+router.patch("/update/:id", notesController.updateNote);
 
 export default router;
