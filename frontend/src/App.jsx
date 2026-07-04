@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import UpdateNote from "./pages/Update Note/UpdateNote";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -17,20 +18,29 @@ const App = () => {
           "http://localhost:3000/api/notes/fetch",
         );
 
-        setNotes(response.data.note || []);
+        const fetchedNote = response.data.note;
+
+        fetchedNote && setNotes(fetchedNote);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [notes]);
+  }, []);
 
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home notes={notes} setNotes={setNotes} />} />
-        <Route path="/create-note" element={<CreateNote />} />
+        <Route
+          path="/create-note"
+          element={<CreateNote setNotes={setNotes} notes={notes} />}
+        />
+        <Route
+          path="/update-note/:id"
+          element={<UpdateNote setNotes={setNotes} notes={notes} />}
+        />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

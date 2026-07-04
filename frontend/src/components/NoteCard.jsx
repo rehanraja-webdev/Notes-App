@@ -1,15 +1,17 @@
 import axios from "axios";
 import "./NoteCard.css";
+import { useNavigate } from "react-router-dom";
 
 const NoteCard = ({ note, setNotes }) => {
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/notes/delete/${id}`,
       );
 
-      setNotes((prevNotes) => prevNotes.filter(() => note._id !== id));
-
+      setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));
       alert(response.data.message);
     } catch (error) {
       console.error(
@@ -37,7 +39,13 @@ const NoteCard = ({ note, setNotes }) => {
       </div>
 
       <div className="btn-container">
-        <button className="edit-btn">Edit</button>
+        <button
+          onClick={() => navigate(`/update-note/${note._id}`)}
+          className="edit-btn"
+        >
+          Edit
+        </button>
+
         <button onClick={() => handleDelete(note._id)} className="delete-btn">
           Delete
         </button>

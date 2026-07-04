@@ -1,7 +1,7 @@
 import Note from "../models/note.model.js";
 
 const getAllNotes = async (req, res) => {
-  const note = await Note.find().sort({ _id: -1 });
+  const note = await Note.find().sort({ updatedAt: -1 });
 
   try {
     if (note.length === 0) {
