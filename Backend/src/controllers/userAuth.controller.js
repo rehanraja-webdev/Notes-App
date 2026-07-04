@@ -1,11 +1,11 @@
-import userModel from "../models/user.model.js";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const Register = async (req, res) => {
   const { fullname, username, email, password, gender, dob } = req.body;
 
-  const isUserExist = await userModel.findOne({
+  const isUserExist = await User.findOne({
     $or: [{ username }, { email }],
   });
 
@@ -19,7 +19,7 @@ const Register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const user = await userModel.create({
+    const user = await User.create({
       fullname,
       username,
       email,
@@ -48,7 +48,7 @@ const Login = async (req, res) => {
   const { username, email, password } = req.body;
 
   //check if user exists with given details ( username, email because they are unique)
-  const user = await userModel.findOne({
+  const user = await User.findOne({
     $or: [{ username }, { email }],
   });
 
@@ -81,7 +81,6 @@ const Login = async (req, res) => {
   res.status(200).json({
     success: true,
     message: "User logged in successfully",
-    token,
     user,
   });
 };

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/create", notesController.createNote);
 
-router.get("/fetch", notesController.getAllNotes);
+router.get("/fetch", notesController.getUserNotes);
 
 router.delete("/delete/:id", notesController.deleteNote);
 router.patch("/update/:id", notesController.updateNote);

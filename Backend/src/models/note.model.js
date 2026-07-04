@@ -10,10 +10,11 @@ const noteSchema = Schema(
       type: String,
       required: true,
     },
-    // User: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User",
-    // },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true },
 );

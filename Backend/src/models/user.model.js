@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     fullname: {
       type: String,
@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
     },
     dob: {
       type: Date,
-      required: [false, "DOB is required"],
       validate: {
         validator: (value) => value < new Date(),
         message: "Date must be from the past",
@@ -36,7 +35,6 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["Male", "Female", "Others"],
-      required: false,
     },
     isActive: {
       type: Boolean,
@@ -46,6 +44,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const userModel = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
-export default userModel;
+export default User;
