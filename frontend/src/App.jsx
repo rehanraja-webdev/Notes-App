@@ -11,12 +11,11 @@ axios.defaults.withCredentials = true;
 
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userName, setUserName] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/notes/get");
-
         setNotes(response.data.notes);
       } catch (error) {
         console.log(error);
@@ -32,12 +31,7 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Home
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              notes={notes}
-              setNotes={setNotes}
-            />
+            <Home notes={notes} setNotes={setNotes} userName={userName} />
           }
         />
         <Route
@@ -49,7 +43,16 @@ const App = () => {
           element={<UpdateNote setNotes={setNotes} notes={notes} />}
         />
       </Route>
-      <Route path="/sign-up" element={<Login setNotes={setNotes} />} />
+      <Route
+        path="/sign-up"
+        element={
+          <Login
+            userName={userName}
+            setUserName={setUserName}
+            setNotes={setNotes}
+          />
+        }
+      />
     </Routes>
   );
 };

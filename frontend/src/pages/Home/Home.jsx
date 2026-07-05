@@ -2,13 +2,15 @@ import "./Home.css";
 import NoteCard from "../../components/NoteCard";
 import { Link } from "react-router-dom";
 
-const Home = ({ notes, setNotes }) => {
+const Home = ({ notes, setNotes, userName }) => {
+  console.log(userName);
   return (
     <div className="homepage">
       {notes.length !== 0 && (
         <>
           <section className="hero-section">
             <h1>📝 Notes Hub</h1>
+            <h2>Welcome {userName}</h2>
             <p>
               Organize your thoughts, save important ideas, and access your
               notes anytime, anywhere.
