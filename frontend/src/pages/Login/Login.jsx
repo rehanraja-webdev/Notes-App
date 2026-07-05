@@ -4,7 +4,7 @@ import Images from "../../assets/Image-container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setNotes }) => {
   const navigate = useNavigate();
   const [currState, setCurrState] = useState("Sign Up");
 
@@ -25,7 +25,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const endpoint = currState === "Login" ? "login" : "register";
       const response = await axios.post(
@@ -33,14 +32,11 @@ const Login = () => {
         formData,
       );
 
-      // Reset form data after successful submission
-      setFormData({
-        fullname: "",
-        username: "",
+      console.log(response);
 
-        email: "",
-        password: "",
-      });
+      const resNotes = await axios.get("http://localhost:3000/api/notes/get");
+
+      setNotes(resNotes.data.notes);
 
       navigate("/");
       alert(response.data.message || "Form submitted successfully!");

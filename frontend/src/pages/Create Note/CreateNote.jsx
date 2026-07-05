@@ -20,7 +20,7 @@ const CreateNote = ({ setNotes }) => {
       "http://localhost:3000/api/notes/create",
       formData,
     );
-    
+
     setNotes((prev) => [response.data.note, ...prev]);
     alert(response.data.message);
     navigate("/");
