@@ -4,7 +4,7 @@
   z-index: 1000;
 
   width: 100%;
-  height: 80px;
+  max-height: 80px;
 
   background-color: white;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
@@ -53,19 +53,20 @@
   color: #2563eb;
 }
 
-.create-note-btn {
-  text-decoration: none;
-  background: #2563eb;
+.profile-icon {
   color: white;
-  padding: 10px 18px;
   border-radius: 10px;
   font-weight: 600;
   transition: 0.3s;
 }
 
-.create-note-btn:hover {
+.profile-icon img {
+  width: 60px;
+  height: 60px;
+}
+
+.profile-icon:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.3);
 }
 
 /* Mobile */
@@ -89,13 +90,9 @@
   .logo-container h2 {
     font-size: 1.3rem;
   }
-
-  .create-note-btn {
-    padding: 8px 14px;
-  }
 }
 
-@media (max-width: 427px) {
+@media (max-width: 426px) {
   .navbar {
     gap: 15px;
   }
@@ -122,11 +119,8 @@
   .nav-link {
     font-size: 0.95rem;
   }
-
-  .create-note-btn {
-    max-width: 150px;
-    text-align: center;
-    padding: 10px;
-    font-size: 0.95rem;
+  .profile-icon img {
+    width: 45px;
+    height: 45px;
   }
 }

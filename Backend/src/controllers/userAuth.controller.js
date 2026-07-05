@@ -86,7 +86,6 @@ const Login = async (req, res) => {
     sameSite: "lax",
   });
 
-  console.log(user);
   res.status(200).json({
     success: true,
     message: "User logged in successfully",

@@ -10,8 +10,8 @@ const Navbar = () => {
         <h2>NotesHub</h2>
       </Link>
 
-      <Link to="/create-note" className="create-note-btn nav-links">
-        + Create Note
+      <Link to="/profile" className="profile-icon nav-links">
+        <img src={Images.defaultProfile} alt="" />
       </Link>
     </nav>
   );

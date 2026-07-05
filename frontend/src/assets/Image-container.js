@@ -1,15 +1,13 @@
 import bg from "./bg.jpg";
-import cat from "./cat.gif";
 import greet from "./greet.gif";
 import logo from "./logo.png";
-import profile from "./profile-img.gif";
+import defaultProfile from "./profile.png";
 
 const Images = {
   bg,
-  cat,
   greet,
   logo,
-  profile,
+  defaultProfile,
 };
 
 export default Images;

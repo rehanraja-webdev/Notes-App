@@ -1,8 +1,9 @@
 import express from "express";
 import userAuthRouter from "./routes/userAuth.routes.js";
+import notesRoutes from "./routes/notes.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import notesRoutes from "./routes/notes.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(
 );
 
 app.use("/api/auth", userAuthRouter);
+app.use("/api", userRouter);
 
 app.use("/api/notes", notesRoutes);
 

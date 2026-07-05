@@ -4,7 +4,7 @@ import Images from "../../assets/Image-container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setNotes, userName, setUserName }) => {
+const Login = ({ setNotes, setUser }) => {
   const navigate = useNavigate();
   const [currState, setCurrState] = useState("Sign Up");
 
@@ -32,7 +32,7 @@ const Login = ({ setNotes, userName, setUserName }) => {
         formData,
       );
 
-      setUserName(response.data.user.fullname.split(" ")[0]);
+      setUser(response.data.user.fullname.split(" ")[0]);
 
       const resNotes = await axios.get("http://localhost:3000/api/notes/get");
 
