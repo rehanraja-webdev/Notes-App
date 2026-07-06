@@ -32,8 +32,8 @@ const App = () => {
     <Routes>
       <Route path="/sign-up" element={<Login setNotes={setNotes} />} />
 
-      <Route path="/profile" element={<Profile />} />
       <Route element={<Layout user={user} />}>
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/"
           element={<Home notes={notes} setNotes={setNotes} user={user} />}

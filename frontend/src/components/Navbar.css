@@ -1,10 +1,10 @@
 .navbar {
-  position: absolute;
+  position: -webkit-sticky;
   top: 0;
   z-index: 1000;
 
   width: 100%;
-  max-height: 80px;
+  height: 80px;
 
   background-color: white;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
