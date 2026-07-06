@@ -30,13 +30,10 @@ const App = () => {
 
   return (
     <Routes>
-      <Route
-        path="/sign-up"
-        element={<Login setUser={setUser} setNotes={setNotes} />}
-      />
+      <Route path="/sign-up" element={<Login setNotes={setNotes} />} />
 
       <Route path="/profile" element={<Profile />} />
-      <Route element={<Layout />}>
+      <Route element={<Layout user={user} />}>
         <Route
           path="/"
           element={<Home notes={notes} setNotes={setNotes} user={user} />}

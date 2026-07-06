@@ -2,7 +2,8 @@ import Images from "../assets/Image-container";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
+  const toggle = user ? "/profile" : "/sign-up";
   return (
     <nav className="navbar">
       <Link to="/" className="logo-container">
@@ -10,8 +11,12 @@ const Navbar = () => {
         <h2>NotesHub</h2>
       </Link>
 
-      <Link to="/profile" className="profile-icon nav-links">
-        <img src={Images.defaultProfile} alt="" />
+      <Link to={toggle} className="profile-icon nav-links">
+        {user ? (
+          <img src={Images.defaultProfile} alt="" />
+        ) : (
+          <button className="sign-up-btn">Sign UP</button>
+        )}
       </Link>
     </nav>
   );

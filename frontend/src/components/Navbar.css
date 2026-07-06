@@ -39,6 +39,18 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  text-decoration: none;
+}
+
+.nav-links .sign-up-btn {
+  border: none;
+  color: white;
+  background-color: #2563eb;
+  cursor: pointer;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
 .nav-link {

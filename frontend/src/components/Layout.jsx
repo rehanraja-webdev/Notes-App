@@ -3,10 +3,10 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./Layout.css";
 
-const Layout = () => {
+const Layout = ({ user }) => {
   return (
     <div className="layout">
-      <Navbar />
+      <Navbar user={user} />
 
       <main className="layout-main">
         <Outlet />
