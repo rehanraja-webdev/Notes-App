@@ -3,8 +3,10 @@ import axios from "axios";
 import Images from "../../assets/Image-container";
 import { useEffect, useState } from "react";
 import "./Profile.css";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     fullname: "",
     username: "",
@@ -12,6 +14,14 @@ function Profile() {
     gender: "Male",
     dob: "2004-06-19",
   });
+
+  const handleLogout = async () => {
+    const res = await axios.get("http://localhost:3000/api/auth/logout");
+
+    console.log(res);
+    alert(res.data.message);
+    navigate("/sign-up");
+  };
 
   useEffect(() => {
     const userData = async () => {
@@ -56,7 +66,12 @@ function Profile() {
           </div>
         </div>
 
-        <button className="edit-pf-btn">Edit Profile</button>
+        <div className="btn-container">
+          <button onClick={handleLogout} className="logout-btn">
+            Log Out
+          </button>
+          <button className="edit-pf-btn">Edit Profile</button>
+        </div>
       </div>
     </div>
   );

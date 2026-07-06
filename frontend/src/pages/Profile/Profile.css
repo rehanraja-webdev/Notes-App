@@ -70,8 +70,8 @@
   font-weight: 500;
 }
 
-.edit-pf-btn {
-  width: 100%;
+.edit-pf-btn,
+.logout-btn {
   margin-top: 25px;
   padding: 12px;
   border: none;
@@ -83,6 +83,11 @@
   transition: 0.3s;
 }
 
-.edit-btn:hover {
+.logout-btn {
+  background: rgb(240, 240, 240);
+  color: #111827;
+}
+
+.edit-pf-btn:hover {
   background: #1d4ed8;
 }
