@@ -1,5 +1,5 @@
 import express from "express";
-import userAuthRouter from "./routes/userAuth.routes.js";
+import authRouter from "./routes/auth.routes.js";
 import notesRoutes from "./routes/notes.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -16,9 +16,7 @@ app.use(
   }),
 );
 
-app.use("/api/auth", userAuthRouter);
-app.use("/api", userRouter);
-
+app.use("/api/auth", authRouter);
 app.use("/api/notes", notesRoutes);
 
 export default app;

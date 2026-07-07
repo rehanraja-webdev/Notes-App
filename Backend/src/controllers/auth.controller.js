@@ -108,4 +108,24 @@ const Logout = (req, res) => {
   res.status(200).json({ message: "User logged out successfully" });
 };
 
-export default { Register, Login, Logout };
+const getUser = async (req, res) => {
+  const token = req.cookies.token;
+  try {
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized!" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      res.status(401).json({ message: "No user found" });
+    }
+    res.status(200).json({ message: "User found!", user });
+  } catch (error) {
+    console.log("Error in finding user", error.message);
+  }
+};
+
+export default { Register, Login, Logout, getUser };
