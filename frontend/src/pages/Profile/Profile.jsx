@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 
-function Profile() {
+function Profile({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     fullname: "",
@@ -16,11 +16,15 @@ function Profile() {
   });
 
   const handleLogout = async () => {
-    const res = await axios.get("http://localhost:3000/api/auth/logout");
-
-    console.log(res);
-    alert(res.data.message);
-    navigate("/sign-up");
+    try {
+      const res = await axios.get("http://localhost:3000/api/auth/logout");
+      alert(res.data.message);
+      localStorage.setItem("isLoggedIn", "false");
+      setIsLoggedIn(false);
+      navigate("/sign-up");
+    } catch (error) {
+      alert("Error while Logout", error.message);
+    }
   };
 
   useEffect(() => {

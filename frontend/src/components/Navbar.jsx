@@ -2,8 +2,8 @@ import Images from "../assets/Image-container";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ user }) => {
-  const toggle = user ? "/profile" : "/sign-up";
+const Navbar = ({ isLoggedIn }) => {
+  const toggle = isLoggedIn ? "/profile" : "/sign-up";
   return (
     <nav className="navbar">
       <Link to="/" className="logo-container">
@@ -12,7 +12,7 @@ const Navbar = ({ user }) => {
       </Link>
 
       <Link to={toggle} className="profile-icon nav-links">
-        {user ? (
+        {isLoggedIn ? (
           <img src={Images.defaultProfile} alt="" />
         ) : (
           <button className="sign-up-btn">Sign UP</button>

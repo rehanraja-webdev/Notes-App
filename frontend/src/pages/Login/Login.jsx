@@ -4,7 +4,7 @@ import Images from "../../assets/Image-container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setNotes }) => {
+const Login = ({ setNotes, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [currState, setCurrState] = useState("Sign Up");
 
@@ -32,8 +32,11 @@ const Login = ({ setNotes }) => {
         formData,
       );
 
-      const resNotes = await axios.get("http://localhost:3000/api/notes/get");
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoggedIn(true);
 
+      const resNotes = await axios.get("http://localhost:3000/api/notes/get");
+      
       setNotes(resNotes.data.notes);
 
       navigate("/");

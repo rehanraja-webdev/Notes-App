@@ -11,32 +11,52 @@ import Profile from "./pages/Profile/Profile";
 axios.defaults.withCredentials = true;
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState("");
+
   useEffect(() => {
+    if (!isLoggedIn) return;
+
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/notes/get");
-        setNotes(response.data.notes);
 
-        setUser(response.data.notes[0].user.fullname);
+          setNotes(response.data.notes);
+          setUser(response.data.notes[0].user.fullname);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Routes>
-      <Route path="/sign-up" element={<Login setNotes={setNotes} />} />
+      <Route
+        path="/sign-up"
+        element={<Login setIsLoggedIn={setIsLoggedIn} setNotes={setNotes} />}
+      />
 
-      <Route element={<Layout user={user} />}>
-        <Route path="/profile" element={<Profile />} />
+      <Route element={<Layout isLoggedIn={isLoggedIn} />}>
+        <Route
+          path="/profile"
+          element={<Profile setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route
           path="/"
-          element={<Home notes={notes} setNotes={setNotes} user={user} />}
+          element={
+            <Home
+              notes={notes}
+              setNotes={setNotes}
+              user={user}
+              isLoggedIn={isLoggedIn}
+            />
+          }
         />
         <Route
           path="/create-note"

@@ -2,7 +2,7 @@ import "./Home.css";
 import NoteCard from "../../components/NoteCard";
 import { Link } from "react-router-dom";
 
-const Home = ({ notes, setNotes, user }) => {
+const Home = ({ notes, setNotes, user, isLoggedIn }) => {
   return (
     <div className="homepage">
       {notes.length !== 0 && (
@@ -51,9 +51,15 @@ const Home = ({ notes, setNotes, user }) => {
             <h1>No Notes Found</h1>
             <p>Create your first note and start organizing your thoughts.</p>
 
-            <Link to="/create-note" className="create-btn">
-              Create Note
-            </Link>
+            {isLoggedIn ? (
+              <Link to="/create-note" className="create-btn">
+                Create Note
+              </Link>
+            ) : (
+              <Link to="/sign-up" className="create-btn">
+                Login/Sign Up
+              </Link>
+            )}
           </div>
         ) : (
           <>
