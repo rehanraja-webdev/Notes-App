@@ -35,7 +35,7 @@ const App = () => {
       try {
         const response = await axios.get("http://localhost:3000/api/notes/get");
 
-        setNotes(response.data.notes);
+        setNotes(response.data.notes || []);
       } catch (error) {
         console.log(error);
       }

@@ -27,14 +27,12 @@ const userSchema = new Schema(
     },
     dob: {
       type: Date,
-      validate: {
-        validator: (value) => value < new Date(),
-        message: "Date must be from the past",
-      },
+      required: true,
     },
     gender: {
       type: String,
       enum: ["Male", "Female", "Others"],
+      required: true,
     },
     isActive: {
       type: Boolean,

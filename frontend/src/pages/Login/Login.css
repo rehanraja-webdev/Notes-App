@@ -35,6 +35,12 @@
   outline-color: #077eff;
 }
 
+.gender-container {
+  display: flex;
+  justify-content: space-between;
+  color: #5c5c5c;
+}
+
 .login-form button {
   padding: 10px;
   border: none;

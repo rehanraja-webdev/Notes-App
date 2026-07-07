@@ -12,6 +12,8 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
     fullname: "",
     username: "",
     email: "",
+    gender: "",
+    dob: "",
     password: "",
   });
 
@@ -33,9 +35,9 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
       );
       setIsLoggedIn(true);
 
-      const resNotes = await axios.get("http://localhost:3000/api/notes/get");
+      // const resNotes = await axios.get("http://localhost:3000/api/notes/get");
 
-      setNotes(resNotes.data.notes);
+      // setNotes(resNotes.data.notes);
 
       navigate("/");
       alert(response.data.message || "Form submitted successfully!");
@@ -51,7 +53,6 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
       <img src={Images.greet} alt="Greeting" />
       <form onSubmit={handleSubmit} className="login-form">
         <h1>{currState === "Login" ? "Login" : "Sign Up"}</h1>
-
         {currState === "Sign Up" && (
           <>
             <input
@@ -74,7 +75,6 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
             />
           </>
         )}
-
         <input
           className="form-input"
           type="email"
@@ -82,6 +82,28 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
           value={formData.email}
           onChange={handleOnChange}
           placeholder="Email"
+          required
+        />
+
+        <select
+          className="form-input"
+          name="gender"
+          value={formData.gender}
+          onChange={handleOnChange}
+          required
+        >
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <input
+          className="form-input"
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleOnChange}
           required
         />
 
@@ -97,12 +119,10 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
         <button type="submit">
           {currState === "Login" ? "Login Now" : "Create Account"}
         </button>
-
         <div className="login-term">
           <input type="checkbox" required />
           <p htmlFor="terms">I agree to the terms and conditions</p>
         </div>
-
         <div className="login-forgot">
           {currState === "Login" ? (
             <p className="login-toggle">

@@ -11,15 +11,14 @@ function Profile({ setIsLoggedIn }) {
     fullname: "",
     username: "",
     email: "",
-    gender: "Male",
-    dob: "2004-06-19",
+    gender: "",
+    dob: "",
   });
 
   const handleLogout = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/auth/logout");
       alert(res.data.message);
-      localStorage.setItem("isLoggedIn", "false");
       setIsLoggedIn(false);
       navigate("/sign-up");
     } catch (error) {
@@ -37,6 +36,8 @@ function Profile({ setIsLoggedIn }) {
         fullname: pre.fullname,
         username: pre.username,
         email: pre.email,
+        gender: pre.gender,
+        dob: new Date(pre.dob).toLocaleDateString("en-GB"),
       }));
     };
 
