@@ -31,12 +31,10 @@ const Login = ({ setNotes, setIsLoggedIn }) => {
         `http://localhost:3000/api/auth/${endpoint}`,
         formData,
       );
-
-      localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
 
       const resNotes = await axios.get("http://localhost:3000/api/notes/get");
-      
+
       setNotes(resNotes.data.notes);
 
       navigate("/");

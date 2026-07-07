@@ -11,29 +11,38 @@ import Profile from "./pages/Profile/Profile";
 axios.defaults.withCredentials = true;
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
-  });
-
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notes, setNotes] = useState([]);
-  const [user, setUser] = useState("");
 
   useEffect(() => {
-    if (!isLoggedIn) return;
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/auth/me");
+        setUser(res.data.user);
+        setIsLoggedIn(true);
+      } catch {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
+  useEffect(() => {
+    if (!user) return;
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/notes/get");
 
-          setNotes(response.data.notes);
-          setUser(response.data.notes[0].user.fullname);
+        setNotes(response.data.notes);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [isLoggedIn]);
+  }, [user]);
 
   return (
     <Routes>

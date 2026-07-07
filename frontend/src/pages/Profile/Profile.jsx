@@ -29,7 +29,7 @@ function Profile({ setIsLoggedIn }) {
 
   useEffect(() => {
     const userData = async () => {
-      const res = await axios.get("http://localhost:3000/api/user");
+      const res = await axios.get("http://localhost:3000/api/auth/me");
 
       const pre = res.data.user;
       setUser((prev) => ({

@@ -64,7 +64,9 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
         ) : (
           <>
             <div className="section-header">
-              <h2>{user.split(" ")[0]}'s Notes</h2>
+              <h2>
+                {user ? `${user.fullname.split(" ")[0]}'s` : "Your"} Notes
+              </h2>
               <p>Your saved notes and ideas.</p>
             </div>
             <div className="notes-container">
