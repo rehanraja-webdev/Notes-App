@@ -12,15 +12,17 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
           anytime, anywhere.
         </p>
 
-        <div className="hero-buttons">
-          <Link to="/create-note" className="create-btn">
-            Create Note
-          </Link>
+        {notes.length > 0 && (
+          <div className="hero-buttons">
+            <Link to="/create-note" className="create-btn">
+              Create Note
+            </Link>
 
-          <a href="#notes" className="view-btn">
-            View Notes
-          </a>
-        </div>
+            <a href="#notes" className="view-btn">
+              View Notes
+            </a>
+          </div>
+        )}
       </section>
 
       <section className="stats-section">
