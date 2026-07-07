@@ -3,7 +3,6 @@ import authRouter from "./routes/auth.routes.js";
 import notesRoutes from "./routes/notes.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import userRouter from "./routes/user.routes.js";
 
 const app = express();
 app.use(express.json());

@@ -112,11 +112,10 @@ const getUser = async (req, res) => {
   const token = req.cookies.token;
   try {
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized!" });
+      return;
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(decoded.id);
 
     if (!user) {

@@ -9,6 +9,6 @@ router.post("/login", userAuthController.Login);
 
 router.get("/logout", userAuthController.Logout);
 
-router.get("/me", getUser);
+router.get("/me", userAuthController.getUser);
 
 export default router;
