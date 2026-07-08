@@ -39,7 +39,7 @@ const Login = ({ setIsLoggedIn }) => {
       toast.success(response.data.message || "Form submitted successfully!");
       navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred!!");
+      toast.error(error.message || "An error occurred!!");
     }
   };
 

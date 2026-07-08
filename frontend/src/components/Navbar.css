@@ -104,7 +104,7 @@
   }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 425px) {
   .navbar {
     gap: 15px;
   }

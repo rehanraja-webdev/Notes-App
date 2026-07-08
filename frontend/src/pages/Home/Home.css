@@ -149,10 +149,7 @@
     margin-top: 16px;
   }
   .stats-section {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    flex-wrap: wrap;
     margin: 20px;
   }
 

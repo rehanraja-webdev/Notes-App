@@ -74,3 +74,26 @@
   color: #077eff;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .login {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 426px) {
+  .login {
+    height: 100%;
+  }
+
+  .login img {
+    display: none;
+  }
+  .login-form {
+    margin: 20px 0;
+    gap: 16px;
+  }
+  .login-form h2 {
+    font-weight: 400;
+  }
+}
