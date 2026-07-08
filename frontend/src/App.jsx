@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import { useState, useEffect } from "react";
 import UpdateNote from "./pages/Update Note/UpdateNote";
 import Profile from "./pages/Profile/Profile";
+import LoadingSpinner from "./utils/LoadingSpinner";
+import toast from "react-hot-toast";
 
 axios.defaults.withCredentials = true;
 
@@ -14,6 +16,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchingNotes, setFetchingNotes] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -24,31 +28,40 @@ const App = () => {
       } catch {
         setUser(null);
         setIsLoggedIn(false);
+      } finally {
+        setIsLoading(false);
       }
     };
+
     checkAuth();
   }, []);
 
   useEffect(() => {
     if (!user) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFetchingNotes(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/notes/get");
+        const res = await axios.get("http://localhost:3000/api/notes/get");
 
-        setNotes(response.data.notes || []);
+        setNotes(res.data.notes || []);
       } catch (error) {
-        console.error(error);
+        toast.error(error.message);
+      } finally {
+        setFetchingNotes(false);
       }
     };
 
     fetchData();
-  }, [user, isLoggedIn]);
+  }, [user]);
+
+  if (isLoading || fetchingNotes) return <LoadingSpinner />;
 
   return (
     <Routes>
       <Route
         path="/sign-up"
-        element={<Login setIsLoggedIn={setIsLoggedIn} setNotes={setNotes} />}
+        element={<Login setIsLoggedIn={setIsLoggedIn} />}
       />
 
       <Route element={<Layout isLoggedIn={isLoggedIn} />}>

@@ -16,6 +16,7 @@ const UpdateNote = ({ setNotes, notes }) => {
     const activeNote = notes.find((n) => n._id === id);
 
     if (activeNote) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTitle(activeNote.title);
       setContent(activeNote.content);
       setNote(activeNote);
@@ -54,8 +55,7 @@ const UpdateNote = ({ setNotes, notes }) => {
       toast.success(res.data.message);
       navigate("/");
     } catch (err) {
-      console.error("Error updating note:", err);
-      toast.error("Failed to update note");
+      toast.error(err.message || "Failed to update note");
     }
   };
   return (

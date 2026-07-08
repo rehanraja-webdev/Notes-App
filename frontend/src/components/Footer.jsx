@@ -28,7 +28,7 @@ function Footer() {
         </div>
 
         <p className="copyright">
-          © {new Date().getFullYear()} Notes App. Built with React & Express.
+          © {new Date().getFullYear()} Notes App. All rights reserved.
         </p>
       </div>
     </footer>

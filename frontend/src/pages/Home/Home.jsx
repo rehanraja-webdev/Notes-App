@@ -1,8 +1,31 @@
 import "./Home.css";
 import NoteCard from "../../components/NoteCard";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import LoadingSpinner from "../../utils/LoadingSpinner";
+import { useState } from "react";
 
 const Home = ({ notes, setNotes, user, isLoggedIn }) => {
+  const [deleting, setDeleting] = useState(false);
+  const handleOnClick = async (id) => {
+    try {
+      setDeleting(true);
+      const response = await axios.delete(
+        `http://localhost:3000/api/notes/delete/${id}`,
+      );
+
+      setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  if (deleting) return <LoadingSpinner />;
+
   return (
     <div className="homepage">
       <section className="hero-section">
@@ -74,6 +97,7 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
                   note={note}
                   notes={notes}
                   setNotes={setNotes}
+                  handleDelete={handleOnClick}
                 />
               ))}
             </div>

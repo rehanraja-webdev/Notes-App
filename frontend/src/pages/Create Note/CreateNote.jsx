@@ -1,18 +1,21 @@
 import "./CreateNote.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 const CreateNote = ({ setNotes }) => {
   const titleRef = useRef("");
   const contentRef = useRef("");
   const navigate = useNavigate();
+  const [creating, setCreating] = useState(false);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setCreating(true);
       const title = titleRef.current.value;
       const content = contentRef.current.value;
 
@@ -28,8 +31,12 @@ const CreateNote = ({ setNotes }) => {
       navigate("/");
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setCreating(false);
     }
   };
+  if (creating) return <LoadingSpinner />;
+
   return (
     <div className="create-note-page">
       <div className="create-note-container">

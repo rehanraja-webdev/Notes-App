@@ -1,26 +1,8 @@
-import axios from "axios";
 import "./NoteCard.css";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
-const NoteCard = ({ note, setNotes }) => {
+const NoteCard = ({ note, handleDelete }) => {
   const navigate = useNavigate();
-
-  const handleDelete = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/notes/delete/${id}`,
-      );
-
-      setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));
-      toast.success(response.data.message);
-    } catch (error) {
-      console.error(
-        "Error deleting note:",
-        error.response?.data || error.message,
-      );
-    }
-  };
 
   const date = new Date();
 

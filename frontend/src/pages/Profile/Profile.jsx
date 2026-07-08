@@ -4,49 +4,46 @@ import Images from "../../assets/Image-container";
 import { useEffect, useState } from "react";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 function Profile({ setIsLoggedIn }) {
+  const [fetching, setFetching] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    fullname: "",
-    username: "",
-    email: "",
-    gender: "",
-    dob: "",
-  });
-
-  const handleLogout = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/auth/logout");
-      toast.success(res.data.message);
-      setIsLoggedIn(false);
-      navigate("/sign-up");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const userData = async () => {
       try {
         const res = await axios.get("http://localhost:3000/api/auth/me");
 
-        const pre = res.data.user;
-        setUser((prev) => ({
-          ...prev,
-          fullname: pre.fullname,
-          username: pre.username,
-          email: pre.email,
-          gender: pre.gender,
-          dob: new Date(pre.dob).toLocaleDateString("en-GB"),
-        }));
+        setUser(res.data.user);
       } catch {
         toast.error("Unable to fetch User data!");
+      } finally {
+        setFetching(false);
       }
     };
 
     userData();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      setLoggingOut(true);
+      const res = await axios.get("http://localhost:3000/api/auth/logout");
+      toast.success(res.data.message);
+      setIsLoggedIn(false);
+      navigate("/sign-up");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoggingOut(false);
+    }
+  };
+
+  if (loggingOut) return <LoadingSpinner />;
+  if (fetching) return <LoadingSpinner />;
 
   return (
     <div className="profile-page">
@@ -71,7 +68,7 @@ function Profile({ setIsLoggedIn }) {
 
           <div className="detail-row">
             <span>Date of Birth</span>
-            <p>{user.dob}</p>
+            <p>{new Date(user.dob).toLocaleDateString("en-GB")}</p>
           </div>
         </div>
 
@@ -79,7 +76,12 @@ function Profile({ setIsLoggedIn }) {
           <button onClick={handleLogout} className="logout-btn">
             Log Out
           </button>
-          <button className="edit-pf-btn">Edit Profile</button>
+          <button
+            onClick={() => toast.error("This Feature is not available yet!")}
+            className="edit-pf-btn"
+          >
+            Edit Profile
+          </button>
         </div>
       </div>
     </div>
