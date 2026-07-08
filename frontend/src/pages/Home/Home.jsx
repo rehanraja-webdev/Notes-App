@@ -41,10 +41,6 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
           <p>Organized</p>
         </div>
       </section>
-      {/* {notes && notes.length !== 0 && (
-        <>
-        </>
-      )} */}
 
       {/* Notes Section */}
       <section id="notes">
@@ -59,7 +55,7 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
               </Link>
             ) : (
               <Link to="/sign-up" className="create-btn">
-                Login/Sign Up
+                Create an Account
               </Link>
             )}
           </div>

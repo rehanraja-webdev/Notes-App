@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./NoteCard.css";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const NoteCard = ({ note, setNotes }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const NoteCard = ({ note, setNotes }) => {
       );
 
       setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));
-      alert(response.data.message);
+      toast.success(response.data.message);
     } catch (error) {
       console.error(
         "Error deleting note:",

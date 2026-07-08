@@ -15,7 +15,7 @@ const Navbar = ({ isLoggedIn }) => {
         {isLoggedIn ? (
           <img src={Images.defaultProfile} alt="" />
         ) : (
-          <button className="sign-up-btn">Sign UP</button>
+          <button className="sign-up-btn">Register</button>
         )}
       </Link>
     </nav>

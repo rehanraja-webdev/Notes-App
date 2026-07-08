@@ -2,6 +2,7 @@ import "./CreateNote.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const CreateNote = ({ setNotes }) => {
   const titleRef = useRef("");
@@ -11,19 +12,23 @@ const CreateNote = ({ setNotes }) => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    const title = titleRef.current.value;
-    const content = contentRef.current.value;
+    try {
+      const title = titleRef.current.value;
+      const content = contentRef.current.value;
 
-    const formData = { title, content };
+      const formData = { title, content };
 
-    const response = await axios.post(
-      "http://localhost:3000/api/notes/create",
-      formData,
-    );
+      const response = await axios.post(
+        "http://localhost:3000/api/notes/create",
+        formData,
+      );
 
-    setNotes((prev) => [response.data.note, ...prev]);
-    alert(response.data.message);
-    navigate("/");
+      setNotes((prev) => [response.data.note, ...prev]);
+      toast.success(response.data.message);
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   return (
     <div className="create-note-page">

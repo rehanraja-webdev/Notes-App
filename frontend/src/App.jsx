@@ -37,12 +37,12 @@ const App = () => {
 
         setNotes(response.data.notes || []);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     fetchData();
-  }, [user]);
+  }, [user, isLoggedIn]);
 
   return (
     <Routes>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Images from "../../assets/Image-container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -35,12 +36,10 @@ const Login = ({ setIsLoggedIn }) => {
       );
       setIsLoggedIn(true);
 
+      toast.success(response.data.message || "Form submitted successfully!");
       navigate("/");
-      alert(response.data.message || "Form submitted successfully!");
     } catch (error) {
-      alert(
-        error.response?.data?.message || "An error occurred during submission.",
-      );
+      toast.error(error.response?.data?.message || "An error occurred!!");
     }
   };
 
@@ -69,6 +68,28 @@ const Login = ({ setIsLoggedIn }) => {
               placeholder="Username"
               required
             />
+
+            <select
+              className="form-input"
+              name="gender"
+              value={formData.gender}
+              onChange={handleOnChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Others">Others</option>
+            </select>
+
+            <input
+              className="form-input"
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleOnChange}
+              required
+            />
           </>
         )}
         <input
@@ -78,28 +99,6 @@ const Login = ({ setIsLoggedIn }) => {
           value={formData.email}
           onChange={handleOnChange}
           placeholder="Email"
-          required
-        />
-
-        <select
-          className="form-input"
-          name="gender"
-          value={formData.gender}
-          onChange={handleOnChange}
-          required
-        >
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Others">Others</option>
-        </select>
-
-        <input
-          className="form-input"
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleOnChange}
           required
         />
 

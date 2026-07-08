@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import toast from "react-hot-toast";
 import Images from "../../assets/Image-container";
 import { useEffect, useState } from "react";
 import "./Profile.css";
@@ -18,27 +18,31 @@ function Profile({ setIsLoggedIn }) {
   const handleLogout = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/auth/logout");
-      alert(res.data.message);
+      toast.success(res.data.message);
       setIsLoggedIn(false);
       navigate("/sign-up");
     } catch (error) {
-      alert("Error while Logout", error.message);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
     const userData = async () => {
-      const res = await axios.get("http://localhost:3000/api/auth/me");
+      try {
+        const res = await axios.get("http://localhost:3000/api/auth/me");
 
-      const pre = res.data.user;
-      setUser((prev) => ({
-        ...prev,
-        fullname: pre.fullname,
-        username: pre.username,
-        email: pre.email,
-        gender: pre.gender,
-        dob: new Date(pre.dob).toLocaleDateString("en-GB"),
-      }));
+        const pre = res.data.user;
+        setUser((prev) => ({
+          ...prev,
+          fullname: pre.fullname,
+          username: pre.username,
+          email: pre.email,
+          gender: pre.gender,
+          dob: new Date(pre.dob).toLocaleDateString("en-GB"),
+        }));
+      } catch {
+        toast.error("Unable to fetch User data!");
+      }
     };
 
     userData();

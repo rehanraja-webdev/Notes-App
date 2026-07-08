@@ -2,6 +2,7 @@ import "./UpdateNote.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const UpdateNote = ({ setNotes, notes }) => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const UpdateNote = ({ setNotes, notes }) => {
       normalize(title) === normalize(note.title) &&
       normalize(content) === normalize(note.content)
     ) {
-      alert("No change found");
+      toast.error("No change found");
       return;
     }
 
@@ -50,11 +51,11 @@ const UpdateNote = ({ setNotes, notes }) => {
         ),
       );
 
-      alert(res.data.message);
+      toast.success(res.data.message);
       navigate("/");
     } catch (err) {
       console.error("Error updating note:", err);
-      alert("Failed to update note");
+      toast.error("Failed to update note");
     }
   };
   return (
