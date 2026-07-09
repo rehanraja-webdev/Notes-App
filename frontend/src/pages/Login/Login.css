@@ -81,7 +81,7 @@
   }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 540px) {
   .login {
     height: 100%;
   }
@@ -97,3 +97,4 @@
     font-weight: 400;
   }
 }
+

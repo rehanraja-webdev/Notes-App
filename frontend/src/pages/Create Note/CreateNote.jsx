@@ -26,7 +26,7 @@ const CreateNote = ({ setNotes }) => {
         formData,
       );
 
-      setNotes((prev) => [response.data.note, ...prev]);
+      setNotes((prev) => [response.data.data, ...prev]);
       toast.success(response.data.message);
       navigate("/");
     } catch (error) {

@@ -10,16 +10,15 @@ function Profile({ setIsLoggedIn }) {
   const [fetching, setFetching] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const userData = async () => {
       try {
         const res = await axios.get("http://localhost:3000/api/auth/me");
-
-        setUser(res.data.user);
+        setUser(res.data.data);
       } catch {
-        toast.error("Unable to fetch User data!");
+        toast.error("Login to Continue!");
       } finally {
         setFetching(false);
       }

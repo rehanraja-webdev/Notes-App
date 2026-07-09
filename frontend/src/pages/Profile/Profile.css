@@ -10,6 +10,7 @@
 .profile-card {
   width: 100%;
   max-width: 450px;
+  margin: auto;
   background: white;
   border-radius: 20px;
   padding: 30px;
@@ -90,4 +91,10 @@
 
 .edit-pf-btn:hover {
   background: #1d4ed8;
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    min-height: auto;
+  }
 }

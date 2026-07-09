@@ -18,7 +18,7 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
       setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));
       toast.success(response.data.message);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.data.message);
     } finally {
       setDeleting(false);
     }
@@ -50,7 +50,7 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
 
       <section className="stats-section">
         <div className="stat-card">
-          <h2>{notes?.length || 0}</h2>
+          <h2>{notes.length || 0}</h2>
           <p>Total Notes</p>
         </div>
 
@@ -71,7 +71,6 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
           <div className="no-notes">
             <h1>No Notes Found</h1>
             <p>Create your first note and start organizing your thoughts.</p>
-
             {isLoggedIn ? (
               <Link to="/create-note" className="create-btn">
                 Create Note
@@ -91,15 +90,14 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
               <p>Your saved notes and ideas.</p>
             </div>
             <div className="notes-container">
-              {notes?.map((note) => (
-                <NoteCard
-                  key={note?._id}
-                  note={note}
-                  notes={notes}
-                  setNotes={setNotes}
-                  handleDelete={handleOnClick}
-                />
-              ))}
+              {notes.length > 0 &&
+                notes.map((note) => (
+                  <NoteCard
+                    key={note?._id}
+                    note={note}
+                    handleDelete={handleOnClick}
+                  />
+                ))}
             </div>
           </>
         )}

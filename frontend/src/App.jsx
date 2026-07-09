@@ -23,7 +23,7 @@ const App = () => {
     const checkAuth = async () => {
       try {
         const res = await axios.get("http://localhost:3000/api/auth/me");
-        setUser(res.data.user);
+        setUser(res.data.data);
         setIsLoggedIn(true);
       } catch {
         setUser(null);
@@ -44,7 +44,7 @@ const App = () => {
       try {
         const res = await axios.get("http://localhost:3000/api/notes/get");
 
-        setNotes(res.data.notes || []);
+        setNotes(res.data.data || []);
       } catch (error) {
         toast.error(error.message);
       } finally {
@@ -67,7 +67,9 @@ const App = () => {
       <Route element={<Layout isLoggedIn={isLoggedIn} />}>
         <Route
           path="/profile"
-          element={<Profile setIsLoggedIn={setIsLoggedIn} />}
+          element={
+            <Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          }
         />
         <Route
           path="/"
@@ -82,7 +84,13 @@ const App = () => {
         />
         <Route
           path="/create-note"
-          element={<CreateNote setNotes={setNotes} notes={notes} />}
+          element={
+            <CreateNote
+              isLoggedIn={isLoggedIn}
+              setNotes={setNotes}
+              notes={notes}
+            />
+          }
         />
         <Route
           path="/update-note/:id"
