@@ -35,12 +35,13 @@ const Register = asyncHandler(async (req, res) => {
     },
   );
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
-
   const createdUser = await User.findById(user._id).select("-password");
 
   res.status(201).json({
@@ -75,10 +76,12 @@ const Login = asyncHandler(async (req, res) => {
     },
   );
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
 
   const loggedInUser = await User.findById(user._id).select("-password");
