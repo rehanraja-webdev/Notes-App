@@ -22,7 +22,9 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/me");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/auth/me`,
+        );
         setUser(res.data.data);
         setIsLoggedIn(true);
       } catch {
@@ -42,7 +44,9 @@ const App = () => {
     setFetchingNotes(true);
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/notes/get");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/notes/get`,
+        );
 
         setNotes(res.data.data || []);
       } catch (error) {

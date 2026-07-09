@@ -12,7 +12,7 @@ const Home = ({ notes, setNotes, user, isLoggedIn }) => {
     try {
       setDeleting(true);
       const response = await axios.delete(
-        `http://localhost:3000/api/notes/delete/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/notes/delete/${id}`,
       );
 
       setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id));

@@ -34,7 +34,7 @@ const Login = ({ setIsLoggedIn }) => {
     try {
       setIsLogging(true);
       const response = await axios.post(
-        `http://localhost:3000/api/auth/${endpoint}`,
+        `${import.meta.env.VITE_API_URL}/api/auth/${endpoint}`,
         formData,
       );
       setIsLoggedIn(true);

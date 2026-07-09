@@ -15,7 +15,9 @@ function Profile({ setIsLoggedIn }) {
   useEffect(() => {
     const userData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/me");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/auth/me`,
+        );
         setUser(res.data.data);
       } catch {
         toast.error("Login to Continue!");
@@ -30,7 +32,9 @@ function Profile({ setIsLoggedIn }) {
   const handleLogout = async () => {
     try {
       setLoggingOut(true);
-      const res = await axios.get("http://localhost:3000/api/auth/logout");
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+      );
       toast.success(res.data.message);
       setIsLoggedIn(false);
       navigate("/sign-up");

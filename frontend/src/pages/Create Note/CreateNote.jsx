@@ -22,7 +22,7 @@ const CreateNote = ({ setNotes }) => {
       const formData = { title, content };
 
       const response = await axios.post(
-        "http://localhost:3000/api/notes/create",
+        `${import.meta.env.VITE_API_URL}/api/notes/create`,
         formData,
       );
 

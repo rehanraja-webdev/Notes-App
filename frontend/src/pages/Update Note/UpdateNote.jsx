@@ -40,7 +40,7 @@ const UpdateNote = ({ setNotes, notes }) => {
       const cleanedTitle = normalize(title);
       const cleanedContent = normalize(content);
       const res = await axios.patch(
-        `http://localhost:3000/api/notes/update/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/notes/update/${id}`,
         { title: cleanedTitle, content: cleanedContent },
       );
 
