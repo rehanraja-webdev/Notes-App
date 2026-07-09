@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import asyncHandler from "../utils/AsyncHandler.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
 const Register = asyncHandler(async (req, res) => {
   const { fullname, username, email, password, gender, dob } = req.body;
