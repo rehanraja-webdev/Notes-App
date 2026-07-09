@@ -1,6 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 
 const Register = async (req, res) => {
   const { fullname, username, email, password, gender, dob } = req.body;
@@ -10,10 +12,7 @@ const Register = async (req, res) => {
   });
 
   if (isUserExist) {
-    return res.status(409).json({
-      success: false,
-      message: "User already exits with given details!!",
-    });
+    throw new ApiError(409, "User already exists!");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -38,13 +37,13 @@ const Register = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
     });
 
     res.status(200).json({ message: "User registered successfully", user });
   } catch (error) {
-    console.log("Failed to register user!", error);
+    throw new ApiError(500, "Internal server Error!");
   }
 };
 
@@ -57,19 +56,13 @@ const Login = async (req, res) => {
   });
 
   if (!user) {
-    return res.status(404).json({
-      success: false,
-      message: "User not found!",
-    });
+    throw new ApiError(404, "User Not Found!");
   }
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
   if (!isPasswordCorrect) {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid credentials!",
-    });
+    throw new ApiError(401, "Unauthorized!!");
   }
 
   const token = jwt.sign(
@@ -82,7 +75,7 @@ const Login = async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "lax",
   });
 
@@ -95,37 +88,31 @@ const Login = async (req, res) => {
 
 const Logout = (req, res) => {
   const token = req.cookies.token;
-  console.log(token);
 
   if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "User is not logged in",
-    });
+    throw new ApiError(403, "Unable to logged out!");
   }
 
   res.clearCookie("token");
-  res.status(200).json({ message: "User logged out successfully" });
+  res.status(200).json({ message: "User logged out successfully!" });
 };
 
 const getUser = async (req, res) => {
   const token = req.cookies.token;
   try {
     if (!token) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
+      throw new ApiError(404, "No token found!");
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
 
     if (!user) {
-      res.status(401).json({ message: "No user found" });
+      throw new ApiError(401, "Please Login/Register to Continue!");
     }
-    res.status(200).json({ message: "User found!", user });
-  } catch (error) {
-    console.log("Error in finding user", error.message);
+    res.status(200).json(new ApiResponse(200, "User found!", user));
+  } catch {
+    throw new ApiError(401, "Login Required");
   }
 };
 

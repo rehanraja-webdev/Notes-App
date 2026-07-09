@@ -1,35 +1,35 @@
 import Note from "../models/note.model.js";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 
 const getUserNotes = async (req, res) => {
   try {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized!" });
+      throw new ApiError(401, "Unauthorized!");
     }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      throw new ApiError(401, "Unauthorized!");
+    }
 
     const notes = await Note.find({ user: decoded.id })
       .populate("user", "fullname username email")
       .sort({ updatedAt: -1 });
 
     if (notes.length === 0) {
-      return res.status(200).json({
-        message: "No notes available!",
-      });
+      return res.status(200).json(new ApiResponse(200, "No Notes Available!"));
     }
 
-    res.status(200).json({
-      message: "Notes fetched successfully!!",
-      notes,
-    });
+    res
+      .status(200)
+      .json(new ApiResponse(200, "Notes fetched successfully!!", notes));
   } catch (error) {
-    res.status(400).json({
-      message: "Error fetching notes!",
-      error,
-    });
+    throw new ApiError(400, "Error while fetching Notes!");
   }
 };
 
@@ -40,12 +40,13 @@ const createNote = async (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({
-        message: "Please Login or Sign Up to create notes!",
-      });
+      throw new ApiError(401, "Unauthorized!");
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      throw new ApiError(401, "Unauthorized!");
+    }
 
     const note = await Note.create({
       title,
@@ -55,15 +56,11 @@ const createNote = async (req, res) => {
 
     await note.populate("user", "fullname username email");
 
-    res.status(201).json({
-      message: "Note created successfully!",
-      note,
-    });
+    res
+      .status(201)
+      .json(new ApiResponse(201, "Note created successfully!", note));
   } catch (error) {
-    res.status(500).json({
-      message: "Failed to create note!",
-      error: error.message,
-    });
+    throw new ApiError(500, "Error in creating your note!");
   }
 };
 
@@ -72,32 +69,28 @@ const deleteNote = async (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized!" });
+      throw new ApiError(401, "Unaothorized!!");
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    if (!decoded) {
+      throw new ApiError(401, "Unauthorized!");
+    }
     const note = await Note.findById(req.params.id);
 
     if (!note) {
-      return res.status(404).json({
-        message: "Note not found!",
-      });
+      throw new ApiError(404, "No note found!");
     }
 
     if (note.user.toString() !== decoded.id) {
-      return res.status(403).json({
-        message: "You can only delete your own notes!",
-      });
+      throw new ApiError(403, "You cann't delete others note!");
     }
 
     await Note.findByIdAndDelete(req.params.id);
 
-    res.status(200).json({ message: "Note deleted successfully!" });
+    res.status(200).json(new ApiResponse(200, "Note deleted successfully!"));
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error in deleting note", error: error.message });
+    throw new ApiError(500, "Error in deleting Note!");
   }
 };
 
@@ -108,23 +101,21 @@ const updateNote = async (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized!" });
+      throw new ApiError(401, "Unauthorized!");
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    if (!decoded) {
+      throw new ApiError(401, "Unauthorized!");
+    }
     const note = await Note.findById(req.params.id);
 
     if (!note) {
-      return res.status(404).json({
-        message: "Note not found!",
-      });
+      throw new ApiError(404, "No note found!");
     }
 
     if (note.user.toString() !== decoded.id) {
-      return res.status(403).json({
-        message: "You can only update your own notes!",
-      });
+      throw new ApiError(403, "You cann't modify other note!");
     }
 
     const normalize = (str) => str.trim().replace(/\s+/g, " ");
@@ -136,9 +127,7 @@ const updateNote = async (req, res) => {
       normalize(note.title) === simpleTitle &&
       normalize(note.content) === simpleContent
     ) {
-      return res.status(200).json({
-        message: "No changes found!",
-      });
+      throw new ApiError(404, "No change found!");
     }
 
     const updatedNote = await Note.findByIdAndUpdate(
@@ -147,14 +136,13 @@ const updateNote = async (req, res) => {
       { new: true },
     );
 
-    res
-      .status(200)
-      .json({ message: "Note updated successfully!", note: updatedNote });
+    res.status(200).json(
+      new ApiResponse(200, "Note updated successfully!", {
+        note: updatedNote,
+      }),
+    );
   } catch (error) {
-    res.status(500).json({
-      message: "Error in updating note!",
-      error: error.message,
-    });
+    throw new ApiError(500, "Error in updating Note!");
   }
 };
 
