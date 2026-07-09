@@ -3,11 +3,13 @@ import { useState } from "react";
 import Images from "../../assets/Image-container";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 import toast from "react-hot-toast";
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [currState, setCurrState] = useState("Sign Up");
+  const [isLogging, setIsLogging] = useState(false);
 
   const [formData, setFormData] = useState({
     fullname: "",
@@ -17,6 +19,7 @@ const Login = ({ setIsLoggedIn }) => {
     dob: "",
     password: "",
   });
+  const endpoint = currState === "Login" ? "login" : "register";
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +32,7 @@ const Login = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const endpoint = currState === "Login" ? "login" : "register";
+      setIsLogging(true);
       const response = await axios.post(
         `http://localhost:3000/api/auth/${endpoint}`,
         formData,
@@ -40,8 +43,12 @@ const Login = ({ setIsLoggedIn }) => {
       navigate("/");
     } catch (error) {
       toast.error(error.message || "An error occurred!!");
+    } finally {
+      setIsLogging(false);
     }
   };
+
+  if (isLogging) return <LoadingSpinner />;
 
   return (
     <div className="login">
