@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [currState, setCurrState] = useState("Sign Up");
+  const [dateInput, setDateInput] = useState("text");
   const [isLogging, setIsLogging] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -91,7 +92,14 @@ const Login = ({ setIsLoggedIn }) => {
 
             <input
               className="form-input"
-              type="date"
+              type={dateInput}
+              placeholder="Date of Birth"
+              onFocus={() => setDateInput("date")}
+              onBlur={(e) => {
+                if (!e.target.value) {
+                  setDateInput("text");
+                }
+              }}
               name="dob"
               value={formData.dob}
               onChange={handleOnChange}

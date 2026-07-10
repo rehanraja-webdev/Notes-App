@@ -18,6 +18,7 @@
 .login-form {
   background: white;
   padding: 20px 30px;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -73,6 +74,17 @@
   font-weight: 500;
   color: #077eff;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .login {
+    gap: 0;
+  }
+}
+@media (max-width: 602px) {
+  .login img {
+    display: none;
+  }
 }
 
 @media (max-width: 426px) {

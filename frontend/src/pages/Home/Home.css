@@ -147,12 +147,6 @@
 @media (max-width: 426px) {
   .hero-section h1 {
     margin: 12px 0 0;
-    font-size: 1.8rem;
-  }
-
-  .hero-section p {
-    margin: 0;
-    font-size: 0.8rem;
   }
 
   .hero-buttons {
@@ -165,7 +159,6 @@
     border-radius: 10px;
     font-weight: 500;
     transition: 0.3s;
-    font-size: 0.7rem;
   }
   .section-header {
     margin: 40px 0 10px;
