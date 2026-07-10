@@ -11,11 +11,11 @@ const Navbar = ({ isLoggedIn }) => {
         <h2>NotesHub</h2>
       </Link>
 
-      <Link to={toggle} className="profile-icon nav-links">
+      <Link to={toggle} className={isLoggedIn ? "profile-icon" : "nav-link"}>
         {isLoggedIn ? (
           <img src={Images.defaultProfile} alt="" />
         ) : (
-          <button className="sign-up-btn">Register</button>
+          <button className="nav-btn">Register</button>
         )}
       </Link>
     </nav>

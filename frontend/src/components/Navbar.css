@@ -35,17 +35,10 @@
   font-weight: 700;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  text-decoration: none;
-}
-
-.nav-links .sign-up-btn {
+.nav-link .nav-btn {
   border: none;
   color: white;
-  background-color: #2563eb;
+  background-color: #195cec;
   cursor: pointer;
   padding: 12px 24px;
   border-radius: 10px;
@@ -53,16 +46,8 @@
   transition: 0.3s;
 }
 
-.nav-link {
-  text-decoration: none;
-  color: #444;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: 0.3s;
-}
-
-.nav-link:hover {
-  color: #2563eb;
+.nav-btn:hover {
+  background-color: #2563eb;
 }
 
 .profile-icon {
@@ -85,6 +70,7 @@
 
 @media (max-width: 768px) {
   .navbar {
+    display: flex;
     padding: 0 20px;
     justify-content: space-between;
     height: auto;
@@ -104,8 +90,10 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .navbar {
+    padding: 0 auto;
+    height: 50px;
     gap: 15px;
   }
 
@@ -122,14 +110,10 @@
     font-size: 1.2rem;
   }
 
-  .nav-links {
-    flex-wrap: wrap;
-    margin-left: 95px;
-    gap: 10px;
-  }
-
-  .nav-link {
-    font-size: 0.95rem;
+  .nav-link .nav-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 500;
   }
   .profile-icon img {
     width: 45px;

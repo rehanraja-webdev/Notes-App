@@ -1,20 +1,14 @@
 import "./NoteCard.css";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../utils/formatDate";
 
 const NoteCard = ({ note, handleDelete }) => {
   const navigate = useNavigate();
-
-  const date = new Date();
-
-  const currentDate = `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()}`;
-
   return (
     <div className="note-card">
       <div className="note-header">
         <h2>{note.title}</h2>
-        <span>{currentDate}</span>
+        <span>{formatDate(new Date())}</span>
       </div>
 
       <div className="note-content">

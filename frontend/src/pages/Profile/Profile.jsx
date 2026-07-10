@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../utils/LoadingSpinner";
+import { formatDate } from "../../utils/formatDate";
 
 function Profile({ setIsLoggedIn }) {
   const [fetching, setFetching] = useState(true);
@@ -71,21 +72,13 @@ function Profile({ setIsLoggedIn }) {
 
           <div className="detail-row">
             <span>Date of Birth</span>
-            <p>{new Date(user.dob).toLocaleDateString("en-GB")}</p>
+            <p>{formatDate(new Date(user.dob))}</p>
           </div>
         </div>
 
-        <div className="btn-container">
-          <button onClick={handleLogout} className="logout-btn">
-            Log Out
-          </button>
-          <button
-            onClick={() => toast.error("This Feature is not available yet!")}
-            className="edit-pf-btn"
-          >
-            Edit Profile
-          </button>
-        </div>
+        <button onClick={handleLogout} className="logout-btn">
+          Log Out
+        </button>
       </div>
     </div>
   );

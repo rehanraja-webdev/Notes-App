@@ -1,5 +1,4 @@
 .homepage {
-  margin-top: 36px;
   background: #f7f8fc;
 }
 
@@ -86,7 +85,7 @@
 
 .section-header {
   text-align: center;
-  margin: 60px 0 30px;
+  margin: 50px 0 70px;
 }
 
 .section-header h2 {
@@ -147,11 +146,40 @@
 
 @media (max-width: 426px) {
   .hero-section h1 {
+    margin: 12px 0 0;
+    font-size: 1.8rem;
+  }
+
+  .hero-section p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  .hero-buttons {
     margin-top: 16px;
+    gap: 15px;
+  }
+
+  .create-btn,
+  .view-btn {
+    border-radius: 10px;
+    font-weight: 500;
+    transition: 0.3s;
+    font-size: 0.7rem;
+  }
+  .section-header {
+    margin: 40px 0 10px;
   }
   .stats-section {
     grid-template-columns: repeat(2, 1fr);
-    margin: 20px;
+    margin: 16px;
+  }
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-card h2 {
+    margin-bottom: 0;
   }
 
   .notes-container {

@@ -103,3 +103,27 @@
 .cancel-btn:hover {
   background: #e9ecef;
 }
+
+@media (max-width: 426px) {
+  .create-note-container {
+    padding: 25px;
+  }
+  .subtitle {
+    margin-bottom: 20px;
+  }
+  .note-form {
+    gap: 16px;
+  }
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+  }
+
+  .form-group textarea {
+    min-height: 80px;
+  }
+
+  .button-group{
+    gap: 10px;
+  }
+}

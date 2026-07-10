@@ -1,14 +1,15 @@
-import "./UpdateNote.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 const UpdateNote = ({ setNotes, notes }) => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [note, setNote] = useState(null);
+  const [updating, setUpdating] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ const UpdateNote = ({ setNotes, notes }) => {
     }
 
     try {
+      setUpdating(true);
       const cleanedTitle = normalize(title);
       const cleanedContent = normalize(content);
       const res = await axios.patch(
@@ -56,8 +58,12 @@ const UpdateNote = ({ setNotes, notes }) => {
       navigate("/");
     } catch (err) {
       toast.error(err.message || "Failed to update note");
+    } finally {
+      setUpdating(false);
     }
   };
+
+  if (updating) return <LoadingSpinner />;
   return (
     <div className="create-note-page">
       <div className="create-note-container">
@@ -92,7 +98,7 @@ const UpdateNote = ({ setNotes, notes }) => {
 
           <div className="button-group">
             <button type="submit" className="save-btn">
-              Update Note
+              Update
             </button>
 
             <Link to="/" className="cancel-btn">

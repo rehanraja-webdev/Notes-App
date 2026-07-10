@@ -40,7 +40,7 @@ const CreateNote = ({ setNotes }) => {
   return (
     <div className="create-note-page">
       <div className="create-note-container">
-        <h1>Create New Note</h1>
+        <h1>Create Note</h1>
         <p className="subtitle">
           Capture your thoughts, ideas, and important information.
         </p>
